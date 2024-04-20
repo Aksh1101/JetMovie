@@ -1,11 +1,14 @@
 package com.example.jetmovie
 
 import android.annotation.SuppressLint
+import android.nfc.Tag
 import android.os.Bundle
 import android.support.v4.os.IResultReceiver2.Default
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,6 +42,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.jetmovie.Model.Movie
+import com.example.jetmovie.navigation.MovieNavigation
 import com.example.jetmovie.ui.theme.JetMovieTheme
 
 class MainActivity : ComponentActivity() {
@@ -46,7 +51,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp {
-                MainContent()
+               MovieNavigation()
             }
         }
     }
@@ -56,61 +61,14 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp(content:@Composable () -> Unit) {
     JetMovieTheme {
-        Scaffold (topBar = { TopAppBar(title = { Text(text = "Movies")},Modifier.padding(2.dp)
-
-
-        )}){
-            content()
-        }
+        content()
 }}
 
-@Composable
-fun MainContent(movieList: List<String> = listOf(
-    "Harry Potter",
-    "Fast and Furious",
-    "Fifty Shades Of Grey",
-    "Cars",
-    "365 days",
-    "Avenger",
-    "Batman",
-    "Deadpool")){
-    Column(modifier =Modifier.padding(start = 12.dp, top = 75.dp)){
-        LazyColumn {
-            items(items = movieList){
-                MovieRow(movie = it)
-            }
-        }
-    }
-}
-@Composable
-fun MovieRow(movie: String){
-    Card(
-        modifier = Modifier
-            .padding(4.dp)
-            .fillMaxWidth()
-            .height(130.dp),
-        elevation = CardDefaults.cardElevation(6.dp),
-        shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-        ){
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start) {
-            Surface(modifier = Modifier
-                .padding(12.dp)
-                .size(100.dp)
-            , shape = RectangleShape,
-                shadowElevation = 4.dp){
-                Icon(imageVector = Icons.Default.Face, contentDescription ="Movie Image" )
-            }
-            Text(text = movie)
-        }
 
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyApp {
-        MainContent()
-    }
-}
+        MovieNavigation()
+}}
